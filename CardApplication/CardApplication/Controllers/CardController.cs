@@ -4,6 +4,7 @@ using CardApplication.Application.Handlers;
 using CardApplication.Application.Models;
 using CardApplication.Exceptions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -26,6 +27,7 @@ namespace CardApplication.Controllers
         
         [HttpPost]
         [Route("register")]
+        [Authorize]
         public async Task<IActionResult> Register(CardInput cardInput, CancellationToken cancellationToken)
         {
             _logger.LogTrace("Begin: Register");
