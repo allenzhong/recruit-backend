@@ -7,7 +7,7 @@ namespace CardApplication.Models
     {
         public CardModelValidator()
         {
-            RuleFor(c => c.Id).NotNull();
+            RuleFor(c => c.Id).NotEmpty().NotNull();
             RuleFor(c => c.CardNumber).CreditCard();
             RuleFor(c => c.Cvc).Matches(@"^[0-9]{3,4}$");
             RuleFor(c => c.Name).NotNull().MaximumLength(50);
