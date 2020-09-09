@@ -5,7 +5,8 @@ using Xunit;
 using ValidationResult = FluentValidation.Results.ValidationResult;
 
 namespace CardApplication.Test.Models
-{
+{                             
+    [Trait("Category", "Unittest")]
     public class CardModelValidatorTests
     {
         [Fact]
