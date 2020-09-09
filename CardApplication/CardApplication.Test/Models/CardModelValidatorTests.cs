@@ -5,7 +5,7 @@ using CardApplication.Models;
 using Xunit;
 using ValidationResult = FluentValidation.Results.ValidationResult;
 
-namespace CardApplication.Test
+namespace CardApplication.Test.Models
 {
     public class CardModelValidatorTests
     {
