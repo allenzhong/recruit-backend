@@ -21,10 +21,10 @@ namespace CardApplication.Controllers
         [Route("register")]
         public async Task<IActionResult> Register(CardInput cardInput)
         {
-            if (!ModelState.IsValid) return null;
             var command = new CardRegisterCommand(cardInput);
             await _mediator.Send(command);
-            return null;
+            return NoContent();
+            
         }
     }
 }
