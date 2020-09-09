@@ -1,8 +1,8 @@
 using System;
 
-namespace CardApplication.Models
+namespace CardApplication.Application.Models
 {
-    public class Card
+    public class CardInput
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

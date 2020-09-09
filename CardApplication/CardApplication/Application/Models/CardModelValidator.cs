@@ -1,9 +1,9 @@
 using System;
 using FluentValidation;
 
-namespace CardApplication.Models
+namespace CardApplication.Application.Models
 {
-    public class CardModelValidator: AbstractValidator<Card>
+    public class CardModelValidator: AbstractValidator<CardInput>
     {
         public CardModelValidator()
         {
