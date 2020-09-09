@@ -5,6 +5,7 @@ using CardApplication.Application.Models;
 using CardApplication.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace CardApplication.Controllers
 {
@@ -13,16 +14,21 @@ namespace CardApplication.Controllers
     public class CardController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly ILogger _logger;
 
-        public CardController(IMediator mediator)
+        public CardController(IMediator mediator, ILogger<CardController> logger)
         {
+            _logger = logger;
             _mediator = mediator;
+            
+            _logger.LogDebug("CardController Constructor");
         }
         
         [HttpPost]
         [Route("register")]
         public async Task<IActionResult> Register(CardInput cardInput, CancellationToken cancellationToken)
         {
+            _logger.LogTrace("Begin: Register");
             try
             {
                 var command = new CardRegisterCommand(cardInput);
@@ -31,6 +37,7 @@ namespace CardApplication.Controllers
             }
             catch (RecordExistingException)
             {
+                _logger.LogTrace("Throw RecordExistingException");
                 return Conflict();
             }
         }

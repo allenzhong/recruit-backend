@@ -4,6 +4,9 @@ project.lock.json
 .DS_Store
 *.pyc
 
+#log
+*internal-nlog.txt
+
 # Visual Studio Code
 .vscode
 

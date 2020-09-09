@@ -10,6 +10,7 @@ using CardApplication.Test.Application.Models;
 using Castle.Core.Internal;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
 
@@ -21,12 +22,14 @@ namespace CardApplication.Test.Controllers
         private readonly Mock<IMediator> _mediatorMock;
         private readonly CardController _controller;
         private readonly CardInput _validInput;
+        private readonly Mock<ILogger<CardController>> _logger;
 
         public CardControllerTests()
         {
+            _logger = new Mock<ILogger<CardController>>();
             _mediatorMock = new Mock<IMediator>();
             _validInput = CardInputGenerator.CreateValidFaker().Generate();
-            _controller = new CardController(_mediatorMock.Object);
+            _controller = new CardController(_mediatorMock.Object, _logger.Object);
         }
         
         [Fact]
