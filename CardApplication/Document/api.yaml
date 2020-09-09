@@ -1,0 +1,72 @@
+---
+swagger: "2.0"
+info:
+  description: |
+    This is the API for card management
+  version: 1.0.0
+  title: Card Management
+  contact:
+    email: zhong.allen@gmail.com
+host: virtserver.swaggerhub.com
+basePath: /AllenZhong/CardManagement/1.0.0
+tags:
+- name: pet
+  description: Everything about your Pets
+  externalDocs:
+    description: Find out more
+    url: http://swagger.io
+- name: store
+  description: Access to Petstore orders
+- name: user
+  description: Operations about user
+  externalDocs:
+    description: Find out more about our store
+    url: http://swagger.io
+schemes:
+- https
+- http
+paths:
+  /card:
+    post:
+      tags:
+      - card
+      summary: Add a new card
+      operationId: addCard
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Card object that will be stored
+        required: true
+        schema:
+          $ref: '#/definitions/Card'
+      responses:
+        "204":
+          description: Card registered successfully
+        "400":
+          description: Bad Request
+        "409":
+          description: Conflict. Card existing.
+definitions:
+  Card:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uuid
+      name:
+        type: string
+        minLength: 3
+        maxLength: 50
+      cardNumber:
+        type: string
+        format: integer
+      cvc:
+        type: string
+        format: integer
+      expireDate:
+        type: string
+        format: date
