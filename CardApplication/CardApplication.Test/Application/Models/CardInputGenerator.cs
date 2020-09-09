@@ -4,7 +4,7 @@ using CardApplication.Application.Models;
 
 namespace CardApplication.Test.Application.Models
 {
-    public class CardInputGenerator
+    public static class CardInputGenerator
     {
         public static Faker<CardInput> CreateValidFaker()
         {

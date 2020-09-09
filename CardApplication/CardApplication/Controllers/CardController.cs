@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 using CardApplication.Application.Handlers;
 using CardApplication.Application.Models;
@@ -11,7 +12,7 @@ namespace CardApplication.Controllers
     [Route("[controller]")]
     public class CardController : ControllerBase
     {
-        private IMediator _mediator;
+        private readonly IMediator _mediator;
 
         public CardController(IMediator mediator)
         {
@@ -20,14 +21,13 @@ namespace CardApplication.Controllers
         
         [HttpPost]
         [Route("register")]
-        public async Task<IActionResult> Register(CardInput cardInput)
+        public async Task<IActionResult> Register(CardInput cardInput, CancellationToken cancellationToken)
         {
             try
             {
                 var command = new CardRegisterCommand(cardInput);
-                await _mediator.Send(command);
+                await _mediator.Send(command, cancellationToken);
                 return NoContent();
-
             }
             catch (RecordExistingException)
             {

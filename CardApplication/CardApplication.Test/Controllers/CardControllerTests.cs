@@ -18,9 +18,9 @@ namespace CardApplication.Test.Controllers
     [Trait("Category", "Unittest")]
     public class CardControllerTests
     {
-        private Mock<IMediator> _mediatorMock;
-        private CardController _controller;
-        private CardInput _validInput;
+        private readonly Mock<IMediator> _mediatorMock;
+        private readonly CardController _controller;
+        private readonly CardInput _validInput;
 
         public CardControllerTests()
         {
@@ -32,7 +32,7 @@ namespace CardApplication.Test.Controllers
         [Fact]
         public async Task ShouldCallHandler_WhenModelStateIsValid()
         {
-            await _controller.Register(_validInput);
+            await _controller.Register(_validInput, CancellationToken.None);
 
             _mediatorMock.Verify(
                 m => m.Send(
@@ -44,7 +44,7 @@ namespace CardApplication.Test.Controllers
         [Fact]
         public async Task ShouldReturnNoContent_WhenModelStateIsValid()
         {
-            var result = await _controller.Register(_validInput);
+            var result = await _controller.Register(_validInput, CancellationToken.None);
 
             Assert.IsType<NoContentResult>(result);
         }
@@ -56,7 +56,7 @@ namespace CardApplication.Test.Controllers
                     m => m.Send(
                         It.IsAny<CardRegisterCommand>(), default))
                 .ThrowsAsync(new RecordExistingException());
-            var result = await _controller.Register(_validInput);
+            var result = await _controller.Register(_validInput, CancellationToken.None);
 
             Assert.IsType<ConflictResult>(result);
         }
@@ -88,6 +88,5 @@ namespace CardApplication.Test.Controllers
 
             Assert.True(routeAttribute.Template == expectedTemplate);
         }
-
     }
 }
