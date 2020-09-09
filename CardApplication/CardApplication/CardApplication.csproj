@@ -8,5 +8,9 @@
       <Folder Include="Controllers" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="FluentValidation.AspNetCore" Version="9.2.0" />
+    </ItemGroup>
+
 
 </Project>
