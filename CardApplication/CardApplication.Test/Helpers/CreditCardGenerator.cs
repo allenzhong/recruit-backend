@@ -11,7 +11,7 @@ namespace CardApplication.Test.Helpers
         {
             var faker = new Faker<CardInput>()
                 .RuleFor(u => u.Id, f => f.Random.Long())
-                .RuleFor(u => u.Name, (f) => f.Name.FullName())
+                .RuleFor(u => u.Name, (f) => f.Name.LastName())
                 .RuleFor(u => u.CardNumber, f => f.Finance.CreditCardNumber())
                 .RuleFor(u => u.Cvc, f => f.Finance.CreditCardCvv())
                 .RuleFor(u => u.ExpiryDate, f => f.Date.Between(DateTime.Today, DateTime.Today.AddYears(3)).Date);
@@ -20,7 +20,7 @@ namespace CardApplication.Test.Helpers
         public static Faker<CreditCard> CreateValidCreditCardFaker()
         {
             var faker = new Faker<CreditCard>()
-                .RuleFor(u => u.Name, (f) => f.Name.FullName())
+                .RuleFor(u => u.Name, (f) => f.Name.LastName())
                 .RuleFor(u => u.CardNumber, f => f.Finance.CreditCardNumber())
                 .RuleFor(u => u.Cvc, f => f.Finance.CreditCardCvv())
                 .RuleFor(u => u.ExpiryDate, f => f.Date.Between(DateTime.Today, DateTime.Today.AddYears(3)).Date);

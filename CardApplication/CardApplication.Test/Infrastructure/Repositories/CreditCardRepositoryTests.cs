@@ -1,8 +1,8 @@
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CardApplication.Domain.Models;
+using CardApplication.Exceptions;
 using CardApplication.Infrastructure.Repositories;
-using CardApplication.Test.Application.Models;
 using CardApplication.Test.Helpers;
 using Dapper;
 using Microsoft.Extensions.Logging;
@@ -37,6 +37,16 @@ namespace CardApplication.Test.Infrastructure.Repositories
             Assert.Equal(creditCard.CardNumber, result.CardNumber);
             Assert.Equal(creditCard.Cvc, result.Cvc);
             Assert.Equal(creditCard.ExpiryDate, result.ExpiryDate);
-        } 
+        }
+
+        [Fact]
+        public async Task GiveRecordExistsShouldThrowRecordExistingException()
+        {
+            await ResetDatabase();
+            var creditCards = await CreditCardDataFactory.CreateCreditCards(Connection, 1);
+
+            await Assert.ThrowsAsync<RecordExistingException>(() =>
+                _creditCardRepository.Create(creditCards.First(), CancellationToken.None));
+        }
     }
 }
