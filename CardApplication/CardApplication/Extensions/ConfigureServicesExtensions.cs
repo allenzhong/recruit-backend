@@ -1,5 +1,6 @@
+using System.Data;
+using System.Data.SqlClient;
 using System.Security.Claims;
-using CardApplication.Domain.Repositories;
 using CardApplication.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
@@ -36,9 +37,12 @@ namespace CardApplication.Extensions
             // services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
         }
 
-        public static void AddCardApplicationServices(this IServiceCollection services)
+        public static void AddCardApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddTransient<ICreditCardRepository, CreditCardRepository>();
+            services.AddScoped<IDbConnection>(provider =>
+                new SqlConnection(configuration["ConnectionStrings:DefaultConnection"]));
+
         }
     }
 }

@@ -2,7 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CardApplication.Domain.Models;
 
-namespace CardApplication.Domain.Repositories
+namespace CardApplication.Infrastructure.Repositories
 {
     public interface ICreditCardRepository
     {

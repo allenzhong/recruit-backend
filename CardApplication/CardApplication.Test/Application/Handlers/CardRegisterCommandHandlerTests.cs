@@ -2,7 +2,7 @@ using System.Threading;
 using CardApplication.Application.Handlers;
 using CardApplication.Application.Models;
 using CardApplication.Domain.Models;
-using CardApplication.Domain.Repositories;
+using CardApplication.Infrastructure.Repositories;
 using CardApplication.Test.Application.Models;
 using MediatR;
 using Moq;

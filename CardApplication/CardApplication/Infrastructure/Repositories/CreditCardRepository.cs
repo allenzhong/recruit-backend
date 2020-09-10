@@ -1,7 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using CardApplication.Domain.Models;
-using CardApplication.Domain.Repositories;
 
 namespace CardApplication.Infrastructure.Repositories
 {

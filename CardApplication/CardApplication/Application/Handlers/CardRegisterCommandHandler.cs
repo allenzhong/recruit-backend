@@ -2,7 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CardApplication.Application.Models;
 using CardApplication.Domain.Models;
-using CardApplication.Domain.Repositories;
+using CardApplication.Infrastructure.Repositories;
 using MediatR;
 
 namespace CardApplication.Application.Handlers

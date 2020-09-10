@@ -30,7 +30,7 @@ namespace CardApplication
             
             services.AddAuth0Services(Configuration); 
             services.AddMediatR(typeof(Startup));
-            services.AddCardApplicationServices();
+            services.AddCardApplicationServices(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
