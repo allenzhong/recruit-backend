@@ -10,7 +10,6 @@ namespace CardApplication.Test.Helpers
         public static Faker<CardInput> CreateValidCardInputFaker()
         {
             var faker = new Faker<CardInput>()
-                .RuleFor(u => u.Id, f => f.Random.Long())
                 .RuleFor(u => u.Name, (f) => f.Name.LastName())
                 .RuleFor(u => u.CardNumber, f => f.Finance.CreditCardNumber())
                 .RuleFor(u => u.Cvc, f => f.Finance.CreditCardCvv())

@@ -34,7 +34,6 @@ namespace CardApplication.Application.Handlers
             var cardInput = request.CardInput;
             var creditCard = new CreditCard()
             {
-                Id = request.CardInput.Id, 
                 Name = cardInput.Name,
                 CardNumber = cardInput.CardNumber,
                 Cvc = cardInput.Cvc,

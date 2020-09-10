@@ -37,12 +37,10 @@ namespace CardApplication.Test.Application.Handlers
 
             _respositoryMock.Verify(
                 r => 
-                    r.Create(It.Is<CreditCard>(c =>
-                           c.Id == _cardInput.Id
-                        && c.Name == _cardInput.Name
-                        && c.CardNumber == _cardInput.CardNumber
-                        && c.Cvc == _cardInput.Cvc
-                        && c.ExpiryDate == _cardInput.ExpiryDate), CancellationToken.None),
+                    r.Create(It.Is<CreditCard>(c => c.Name == _cardInput.Name
+                                                    && c.CardNumber == _cardInput.CardNumber
+                                                    && c.Cvc == _cardInput.Cvc
+                                                    && c.ExpiryDate == _cardInput.ExpiryDate), CancellationToken.None),
                         Times.Once());
         }   
     }

@@ -19,16 +19,6 @@ namespace CardApplication.Test.Application.Models
         }
 
         [Fact]
-        public void ShouldReturnInvalidWhenIdIsNull()
-        {
-            var card = CreditCardGenerator.CreateValidCardInputFaker() 
-                .RuleFor(u => u.Id, f => 0)
-                .Generate();
-            var result = ValidateCard(card);
-            Assert.False(result.IsValid);
-        }
-        
-        [Fact]
         public void ShouldReturnInvalidWhenNameIsNull()
         {
             var card = CreditCardGenerator.CreateValidCardInputFaker()
