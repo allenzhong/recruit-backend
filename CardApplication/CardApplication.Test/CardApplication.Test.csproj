@@ -22,8 +22,4 @@
       <ProjectReference Include="..\CardApplication\CardApplication.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Application" />
-    </ItemGroup>
-
 </Project>
