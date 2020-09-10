@@ -33,7 +33,8 @@ namespace CardApplication
         private static void MigrateDatabase(IHost webHostBuilder)
         {
             var configuration = webHostBuilder.Services.GetService(typeof(IConfiguration)) as IConfiguration;
-            var connString = configuration["ConnectionStrings:Default"];
+            if (configuration == null) return;
+            var connString = configuration["ConnectionStrings:DefaultConnection"];
             DbMigrator.Migrate(connString);
         }
         public static IHostBuilder CreateHostBuilder(string[] args) =>

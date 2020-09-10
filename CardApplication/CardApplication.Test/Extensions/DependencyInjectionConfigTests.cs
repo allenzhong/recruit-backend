@@ -16,6 +16,7 @@ using Xunit;
 
 namespace CardApplication.Test.Extensions
 {
+    [Trait("Category", "Unittest")]
     public class DependencyInjectionConfigTests
     {       
         [Fact]

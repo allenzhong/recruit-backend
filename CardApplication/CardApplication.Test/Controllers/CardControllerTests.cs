@@ -7,6 +7,7 @@ using CardApplication.Application.Models;
 using CardApplication.Controllers;
 using CardApplication.Exceptions;
 using CardApplication.Test.Application.Models;
+using CardApplication.Test.Helpers;
 using Castle.Core.Internal;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -28,7 +29,7 @@ namespace CardApplication.Test.Controllers
         {
             _logger = new Mock<ILogger<CardController>>();
             _mediatorMock = new Mock<IMediator>();
-            _validInput = CardInputGenerator.CreateValidFaker().Generate();
+            _validInput = CreditCardGenerator.CreateValidCardInputFaker().Generate();
             _controller = new CardController(_mediatorMock.Object, _logger.Object);
         }
         

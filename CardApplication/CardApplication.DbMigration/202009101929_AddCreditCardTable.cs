@@ -18,7 +18,8 @@ namespace CardApplication.DbMigration
                 .WithIdColumn()
                 .WithStringNotNullableColumn("Name", 50)
                 .WithStringNotNullableColumn("CardNumber", 20)
-                .WithStringNotNullableColumn("Cvc", 10);
+                .WithStringNotNullableColumn("Cvc", 10)
+                .WithColumn("ExpiryDate").AsDate().NotNullable();
         }
 
         public override void Down()

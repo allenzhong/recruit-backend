@@ -4,6 +4,7 @@ using CardApplication.Application.Models;
 using CardApplication.Domain.Models;
 using CardApplication.Infrastructure.Repositories;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace CardApplication.Application.Handlers
 {
@@ -20,13 +21,16 @@ namespace CardApplication.Application.Handlers
     public class CardRegisterCommandHandler : AsyncRequestHandler<CardRegisterCommand>
     {
         private ICreditCardRepository _repository;
+        private ILogger<CardRegisterCommandHandler> _logger;
 
-        public CardRegisterCommandHandler(ICreditCardRepository repository)
+        public CardRegisterCommandHandler(ICreditCardRepository repository, ILogger<CardRegisterCommandHandler> logger)
         {
+            _logger = logger;
             _repository = repository;
         }
         protected override async Task Handle(CardRegisterCommand request, CancellationToken cancellationToken)
         {
+            _logger.LogTrace("Start handler");
             var cardInput = request.CardInput;
             var creditCard = new CreditCard()
             {
@@ -38,6 +42,7 @@ namespace CardApplication.Application.Handlers
             };
             
             await _repository.Create(creditCard, cancellationToken);
+            _logger.LogTrace("Created credit card");
         }
     }
 }
