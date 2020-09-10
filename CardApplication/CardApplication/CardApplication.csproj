@@ -15,5 +15,8 @@
     <ItemGroup>
       <Content Update="nlog.config" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\CardApplication.DbMigration\CardApplication.DbMigration.csproj" />
+    </ItemGroup>
 
 </Project>

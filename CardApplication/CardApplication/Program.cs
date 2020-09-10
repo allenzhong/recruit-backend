@@ -1,6 +1,8 @@
 using System;
+using CardApplication.DbMigration;
 using NLog.Web;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
 
@@ -14,7 +16,9 @@ namespace CardApplication
             try
             {
                 logger.Debug("init main");
-                CreateHostBuilder(args).Build().Run();
+                var hostBuilder = CreateHostBuilder(args).Build();
+                MigrateDatabase(hostBuilder);
+                hostBuilder.Run();
             }
             catch (Exception exception)
             {
@@ -26,7 +30,12 @@ namespace CardApplication
                 NLog.LogManager.Shutdown();
             }
         }
-
+        private static void MigrateDatabase(IHost webHostBuilder)
+        {
+            var configuration = webHostBuilder.Services.GetService(typeof(IConfiguration)) as IConfiguration;
+            var connString = configuration["ConnectionStrings:Default"];
+            DbMigrator.Migrate(connString);
+        }
         private static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); })

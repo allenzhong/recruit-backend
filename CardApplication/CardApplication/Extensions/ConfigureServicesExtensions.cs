@@ -1,7 +1,7 @@
 using System.Security.Claims;
-using CardApplication.Auth;
+using CardApplication.Domain.Repositories;
+using CardApplication.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -34,6 +34,11 @@ namespace CardApplication.Extensions
             // });
             //
             // services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
+        }
+
+        public static void AddCardApplicationServices(this IServiceCollection services)
+        {
+            services.AddTransient<ICreditCardRepository, CreditCardRepository>();
         }
     }
 }
