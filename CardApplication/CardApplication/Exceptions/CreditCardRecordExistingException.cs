@@ -2,7 +2,7 @@ using System;
 
 namespace CardApplication.Exceptions
 {
-    public class RecordExistingException : Exception
+    public class CreditCardRecordExistingException : Exception
     {
     }
 }

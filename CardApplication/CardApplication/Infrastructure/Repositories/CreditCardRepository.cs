@@ -50,7 +50,7 @@ namespace CardApplication.Infrastructure.Repositories
             {
                 if (e.Message.Contains("UNIQUE KEY constraint 'UC_Name_CardNumber'"))
                 {
-                    throw new RecordExistingException();
+                    throw new CreditCardRecordExistingException();
                 }
 
                 throw;

@@ -21,16 +21,16 @@ namespace CardApplication.Test.Controllers
     public class CardControllerTests
     {
         private readonly Mock<IMediator> _mediatorMock;
-        private readonly CardController _controller;
+        private readonly CreditCardController _controller;
         private readonly CardInput _validInput;
-        private readonly Mock<ILogger<CardController>> _logger;
+        private readonly Mock<ILogger<CreditCardController>> _logger;
 
         public CardControllerTests()
         {
-            _logger = new Mock<ILogger<CardController>>();
+            _logger = new Mock<ILogger<CreditCardController>>();
             _mediatorMock = new Mock<IMediator>();
             _validInput = CreditCardGenerator.CreateValidCardInputFaker().Generate();
-            _controller = new CardController(_mediatorMock.Object, _logger.Object);
+            _controller = new CreditCardController(_mediatorMock.Object, _logger.Object);
         }
         
         [Fact]
@@ -59,7 +59,7 @@ namespace CardApplication.Test.Controllers
             _mediatorMock.Setup(
                     m => m.Send(
                         It.IsAny<CardRegisterCommand>(), default))
-                .ThrowsAsync(new RecordExistingException());
+                .ThrowsAsync(new CreditCardRecordExistingException());
             var result = await _controller.Register(_validInput, CancellationToken.None);
 
             Assert.IsType<ConflictResult>(result);
@@ -78,7 +78,7 @@ namespace CardApplication.Test.Controllers
         [InlineData("Register", null, "register")]
         public void ShouldHaveRouteAttributes_OnMethods(string methodName, Type[] types, string expectedTemplate)
         {
-            AssertRouteTemplate<CardController>(methodName, types, expectedTemplate);
+            AssertRouteTemplate<CreditCardController>(methodName, types, expectedTemplate);
         }
         
         private void AssertRouteTemplate<T>(string methodName, Type[] methodParameterTypes,

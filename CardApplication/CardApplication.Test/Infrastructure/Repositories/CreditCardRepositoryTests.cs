@@ -45,7 +45,7 @@ namespace CardApplication.Test.Infrastructure.Repositories
             await ResetDatabase();
             var creditCards = await CreditCardDataFactory.CreateCreditCards(Connection, 1);
 
-            await Assert.ThrowsAsync<RecordExistingException>(() =>
+            await Assert.ThrowsAsync<CreditCardRecordExistingException>(() =>
                 _creditCardRepository.Create(creditCards.First(), CancellationToken.None));
         }
     }
