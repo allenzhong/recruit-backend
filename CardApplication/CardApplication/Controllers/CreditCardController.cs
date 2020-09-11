@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using CardApplication.Application.Handlers;
@@ -61,9 +62,19 @@ namespace CardApplication.Controllers
         public async Task<IActionResult> GetById(long id)
         {
             _logger.LogTrace("Begin: Get by Id");
-            var query = new GetCreditCardByIdQuery(id);
-            var record = await _mediator.Send(query);
-            return Ok(record);
+            
+            try
+            {
+                var query = new GetCreditCardByIdQuery(id);
+                var record = await _mediator.Send(query);
+                return Ok(record);
+            }
+            catch (RecordNotFoundException e)
+            {
+                _logger.LogTrace($"Record not found by id {id}");
+
+                return NotFound();
+            }
         }
         
     }
