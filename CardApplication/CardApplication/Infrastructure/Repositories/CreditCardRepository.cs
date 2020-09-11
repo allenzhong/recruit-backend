@@ -64,19 +64,30 @@ namespace CardApplication.Infrastructure.Repositories
         public async Task<IEnumerable<CreditCard>> Get()
         {
             const string sql = @"
-                SELECT  [Name],
+                SELECT  [Id],
+                        [Name],
                         [CardNumber],
                         [Cvc],
                         [ExpiryDate],
-                        [CvcSalt] FROM [dbo].[CreditCards] 
+                        [CvcSalt] 
+                FROM [dbo].[CreditCards] 
             ";
 
             return await _connection.QueryAsync<CreditCard>(sql);
         }
 
-        public Task<CreditCard> GetById(long id)
+        public async Task<CreditCard> GetById(long id)
         {
-            throw new System.NotImplementedException();
+            const string sql = @"
+                SELECT  [Id],
+                        [Name],
+                        [CardNumber],
+                        [ExpiryDate]
+                FROM [dbo].[CreditCards] 
+                WHERE Id = @Id
+            ";
+            return await _connection.QueryFirstAsync<CreditCard>(sql, new
+                {Id = id});
         }
     }
 }

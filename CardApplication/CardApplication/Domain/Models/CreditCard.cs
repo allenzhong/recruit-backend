@@ -20,6 +20,7 @@ namespace CardApplication.Domain.Models
             }
             set
             {
+                //TODO verify cvc, need change cvc setting logic 
                 var ascii = Encoding.ASCII;  
                 _cvc = Convert.ToBase64String(KeyDerivation.Pbkdf2(
                     password: value,

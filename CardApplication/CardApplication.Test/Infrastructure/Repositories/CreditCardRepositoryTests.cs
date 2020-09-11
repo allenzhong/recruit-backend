@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,7 @@ namespace CardApplication.Test.Infrastructure.Repositories
         }
 
         [Fact]
-        public async Task GivenRecordDoesNotExistShouldCreateRecord()
+        public async Task ShouldCreateRecord_WhenRecordDoesNotExist()
         {
             await ResetDatabase();
             var creditCard = CreditCardGenerator.CreateValidCreditCardFaker().Generate();
@@ -33,6 +34,7 @@ namespace CardApplication.Test.Infrastructure.Repositories
                 @"SELECT * FROM CreditCards where CardNumber=@CardNumber",
                 new { creditCard.CardNumber});
             
+            Assert.NotEqual(0L, result.Id);
             Assert.Equal(creditCard.Name, result.Name);
             Assert.Equal(creditCard.CardNumber, result.CardNumber);
             Assert.Equal(creditCard.Cvc, result.Cvc);
@@ -41,7 +43,7 @@ namespace CardApplication.Test.Infrastructure.Repositories
         }
 
         [Fact]
-        public async Task GiveRecordExistsShouldThrowRecordExistingException()
+        public async Task ShouldThrowRecordExistingException_WhenCreateAndRecordExists()
         {
             await ResetDatabase();
             var creditCards = await CreditCardDataFactory.CreateCreditCards(Connection, 1);
@@ -49,8 +51,7 @@ namespace CardApplication.Test.Infrastructure.Repositories
             await Assert.ThrowsAsync<CreditCardRecordExistingException>(() =>
                 _creditCardRepository.Create(creditCards.First()));
         }
-        
-        
+
         [Fact]
         public async Task Give5RecordExistsShouldReturn_WhenCallingGet()
         {
@@ -58,7 +59,7 @@ namespace CardApplication.Test.Infrastructure.Repositories
             var creditCards = await CreditCardDataFactory.CreateCreditCards(Connection, 5);
 
             var result = await _creditCardRepository.Get();
-            
+
             foreach (var verifyModel in creditCards.Select(dbModel => result.Where(r =>
                 r.CardNumber == dbModel.CardNumber
                 && r.Cvc == dbModel.Cvc
@@ -70,6 +71,22 @@ namespace CardApplication.Test.Infrastructure.Repositories
             }
         }
         
-        
+        [Fact]
+        public async Task Give5RecordExistsShouldReturn_WhenCallingGetById()
+        {
+            await ResetDatabase();
+            var creditCards = await CreditCardDataFactory.CreateCreditCards(Connection, 5);
+
+            var random = new Random(5).Next();
+            var oneOfCards = creditCards.Take(random).First();
+            var result = await _creditCardRepository.GetById(oneOfCards.Id);
+
+            Assert.Equal(oneOfCards.Id, result.Id); 
+            Assert.Equal(oneOfCards.Name, result.Name); 
+            Assert.Equal(oneOfCards.CardNumber, result.CardNumber); 
+            //TODO verify cvc, need change cvc setting logic 
+            // Assert.Equal(oneOfCards.Cvc, result.Cvc); 
+            Assert.Equal(oneOfCards.ExpiryDate, result.ExpiryDate); 
+        }
     }
 }

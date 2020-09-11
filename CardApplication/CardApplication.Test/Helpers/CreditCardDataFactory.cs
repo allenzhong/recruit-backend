@@ -8,7 +8,7 @@ namespace CardApplication.Test.Helpers
 {
     public class CreditCardDataFactory
     {
-        public static async Task<List<CreditCard>> CreateCreditCards(IDbConnection connection, int numberOfCreditCards)
+        public static async Task<IEnumerable<CreditCard>> CreateCreditCards(IDbConnection connection, int numberOfCreditCards)
         {
             var creditCards = CreditCardGenerator.CreateValidCreditCardFaker().Generate(numberOfCreditCards);
             foreach (var c in creditCards)
@@ -38,7 +38,11 @@ namespace CardApplication.Test.Helpers
                 });
             }
 
-            return creditCards;
+
+            var queryAll = @"SELECT * FROM CreditCards";
+            var result = await connection.QueryAsync<CreditCard>(queryAll);
+            
+            return result;
         }
     }
 }
