@@ -20,7 +20,7 @@ namespace CardApplication.Test.Domain.Models
             var creditCard = new CreditCard();
 
             var cvc = new Bogus.Faker().Finance.CreditCardCvv();
-            creditCard.Salt = CreditCard.GenerateSalt(5);
+            creditCard.CvcSalt = CreditCard.GenerateSalt(5);
             creditCard.Cvc = cvc;
 
             Assert.NotEqual(cvc, creditCard.Cvc);

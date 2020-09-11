@@ -36,6 +36,7 @@ namespace CardApplication.Test.Infrastructure.Repositories
             Assert.Equal(creditCard.Name, result.Name);
             Assert.Equal(creditCard.CardNumber, result.CardNumber);
             Assert.Equal(creditCard.Cvc, result.Cvc);
+            Assert.Equal(creditCard.CvcSalt, result.CvcSalt);
             Assert.Equal(creditCard.ExpiryDate, result.ExpiryDate);
         }
 

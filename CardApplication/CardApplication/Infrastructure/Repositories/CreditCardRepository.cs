@@ -28,13 +28,15 @@ namespace CardApplication.Infrastructure.Repositories
                         [Name],
                         [CardNumber],
                         [Cvc],
-                        [ExpiryDate]
+                        [ExpiryDate],
+                        [CvcSalt]
                         )
                 VALUES (
                         @Name,
                         @CardNumber,
                         @Cvc,
-                        @ExpiryDate
+                        @ExpiryDate,
+                        @CvcSalt
                 )
             ";
 
@@ -43,7 +45,8 @@ namespace CardApplication.Infrastructure.Repositories
                     card.Name,
                     card.CardNumber,
                     card.Cvc,
-                    card.ExpiryDate
+                    card.ExpiryDate,
+                    card.CvcSalt
                 });
             }
             catch (SqlException e)

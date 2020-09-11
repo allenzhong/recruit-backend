@@ -4,9 +4,9 @@ using FluentMigrator;
 namespace CardApplication.DbMigration
 {
     [ExcludeFromCodeCoverage]
-    [Migration(2020091101200)]
+    [Migration(202009110120)]
     // ReSharper disable once InconsistentNaming
-    public class _2020091101200_AddCvcSaltColumn : Migration
+    public class _202009110120_AddCvcSaltColumn : Migration
     {
         private const string TableName = "CreditCards";
         private const string ColumnName = "CvcSalt";

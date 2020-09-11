@@ -9,7 +9,7 @@ namespace CardApplication.Domain.Models
 {
     public class CreditCard
     {
-        private string cvc = "";
+        private string _cvc = "";
         public long Id { get; set; }
         public string Name { get; set; }
         public string CardNumber { get; set; }
@@ -18,22 +18,21 @@ namespace CardApplication.Domain.Models
         {
             get
             {
-                return cvc;
+                return _cvc;
             }
             set
             {
-                Encoding ascii = Encoding.ASCII;  
-                Encoding unicode = Encoding.Unicode;
-                cvc = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                var ascii = Encoding.ASCII;  
+                _cvc = Convert.ToBase64String(KeyDerivation.Pbkdf2(
                     password: value,
-                    salt: unicode.GetBytes(Salt), 
+                    salt: ascii.GetBytes(CvcSalt), 
                     prf: KeyDerivationPrf.HMACSHA1,
                     iterationCount: 10000,
                     numBytesRequested: 256 / 8));
             }
         }
 
-        public string Salt { get; set; }
+        public string CvcSalt { get; set; } = "";
         public DateTime ExpiryDate { get; set; }
 
         public static string GenerateSalt(int length)

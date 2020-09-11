@@ -39,7 +39,8 @@ namespace CardApplication.Test.Application.Handlers
                 r => 
                     r.Create(It.Is<CreditCard>(c => c.Name == _cardInput.Name
                                                     && c.CardNumber == _cardInput.CardNumber
-                                                    && c.Cvc == _cardInput.Cvc
+                                                    && c.Cvc != _cardInput.Cvc
+                                                    && !string.IsNullOrEmpty(c.CvcSalt) 
                                                     && c.ExpiryDate == _cardInput.ExpiryDate), CancellationToken.None),
                         Times.Once());
         }   

@@ -32,13 +32,12 @@ namespace CardApplication.Application.Handlers
         {
             _logger.LogTrace("Start handler");
             var cardInput = request.CardInput;
-            var creditCard = new CreditCard()
-            {
-                Name = cardInput.Name,
-                CardNumber = cardInput.CardNumber,
-                Cvc = cardInput.Cvc,
-                ExpiryDate = cardInput.ExpiryDate
-            };
+            var creditCard = new CreditCard();
+            creditCard.Name = cardInput.Name;
+            creditCard.CardNumber = cardInput.CardNumber;
+            creditCard.CvcSalt = CreditCard.GenerateSalt(5);
+            creditCard.Cvc = cardInput.Cvc;
+            creditCard.ExpiryDate = cardInput.ExpiryDate;
             
             await _repository.Create(creditCard, cancellationToken);
             _logger.LogTrace("Created credit card");

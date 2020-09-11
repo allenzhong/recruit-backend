@@ -4,9 +4,9 @@ using FluentMigrator;
 namespace CardApplication.DbMigration
 {
     [ExcludeFromCodeCoverage]
-    [Migration(202009110700)]
+    [Migration(202009102000)]
     // ReSharper disable once InconsistentNaming
-    public class _202009110700_AddUniqueConstraintOnNameAndCardNumber : Migration
+    public class _202009102000_AddUniqueConstraintOnNameAndCardNumber : Migration
     {
         private const string TableName = "CreditCards";
         private const string UniqueConstraintName = "UC_Name_CardNumber";
