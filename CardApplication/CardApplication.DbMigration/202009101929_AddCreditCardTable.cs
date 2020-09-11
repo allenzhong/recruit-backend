@@ -1,7 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using FluentMigrator;
-using FluentMigrator.Builders.Create.Sequence;
-using FluentMigrator.Builders.Create.Table;
 
 namespace CardApplication.DbMigration
 {

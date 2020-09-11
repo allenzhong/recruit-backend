@@ -7,7 +7,6 @@ using CardApplication.Application.Handlers;
 using CardApplication.Application.Models;
 using CardApplication.Controllers;
 using CardApplication.Exceptions;
-using CardApplication.Test.Application.Models;
 using CardApplication.Test.Helpers;
 using Castle.Core.Internal;
 using MediatR;

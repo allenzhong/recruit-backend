@@ -3,7 +3,6 @@ using CardApplication.Application.Handlers;
 using CardApplication.Application.Models;
 using CardApplication.Domain.Models;
 using CardApplication.Infrastructure.Repositories;
-using CardApplication.Test.Application.Models;
 using CardApplication.Test.Helpers;
 using MediatR;
 using Microsoft.Extensions.Logging;
