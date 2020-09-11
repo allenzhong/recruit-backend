@@ -128,7 +128,7 @@ namespace CardApplication.Test.Controllers
             var controllerType = _controller.GetType();
             var methodInfo = controllerType.GetMethod("Get");
 
-            Assert.NotNull(methodInfo.GetAttribute<HttpPostAttribute>());
+            Assert.NotNull(methodInfo.GetAttribute<HttpGetAttribute>());
         }
         
         [Theory]
