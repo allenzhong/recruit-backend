@@ -144,8 +144,6 @@ namespace CardApplication.Test.Controllers
             }
         }
         
-
-        
         [Fact]
         public void ShouldHaveRequiredAttributes_OnRegister()
         {
@@ -176,7 +174,7 @@ namespace CardApplication.Test.Controllers
         [Theory]
         [InlineData("Register", null, "register")]
         [InlineData("Get", null, "")]
-        [InlineData("GetById", new Type[] {typeof(long)}, "{id}")]
+        [InlineData("GetById", new[] {typeof(long)}, "{id}")]
         public void ShouldHaveRouteAttributes_OnMethods(string methodName, Type[] types, string expectedTemplate)
         {
             AssertRouteTemplate<CreditCardController>(methodName, types, expectedTemplate);
