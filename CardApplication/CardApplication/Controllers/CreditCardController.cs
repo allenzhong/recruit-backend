@@ -64,7 +64,7 @@ namespace CardApplication.Controllers
             _logger.LogTrace("Begin: Get by Id");
             var query = new GetCreditCardByIdQuery(id);
             var record = await _mediator.Send(query);
-            return null;
+            return Ok(record);
         }
         
     }

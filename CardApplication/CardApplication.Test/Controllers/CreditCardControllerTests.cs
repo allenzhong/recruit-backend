@@ -96,21 +96,6 @@ namespace CardApplication.Test.Controllers
         }
         
         [Fact]
-        public async Task ShouldCallHandler_WhenCallingGetById()
-        {
-            const long id = 123L;
-            
-            await _controller.GetById(id);
-
-            _mediatorMock.Verify(
-                m => m.Send(
-                    It.Is<GetCreditCardByIdQuery>(
-                        q => q.Id == id), 
-                    It.IsAny<CancellationToken>()),
-                Times.Once);
-        }
-        
-        [Fact]
         public async Task ShouldReturnEmptyListOfRecords_WhenCallingGet_IfNoData()
         {
             var mockResult = new List<CreditCartOutput>();
@@ -126,6 +111,40 @@ namespace CardApplication.Test.Controllers
                 Assert.Empty(recordSet);
             }
         }
+        
+        [Fact]
+        public async Task ShouldCallHandler_WhenCallingGetById()
+        {
+            const long id = 123L;
+            
+            await _controller.GetById(id);
+
+            _mediatorMock.Verify(
+                m => m.Send(
+                    It.Is<GetCreditCardByIdQuery>(
+                        q => q.Id == id), 
+                    It.IsAny<CancellationToken>()),
+                Times.Once);
+        }
+        
+        [Fact]
+        public async Task ShouldReturnARecord_WhenCallingGetByIdAndDataExisting()
+        {
+            var mockResult = CreditCardGenerator.CreateValidCreditCardOutputFaker().Generate();
+
+            _mediatorMock.Setup(m =>
+                m.Send(It.IsAny<GetCreditCardByIdQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(mockResult);
+            
+            var response = await _controller.GetById(mockResult.Id);
+            if (response is OkObjectResult result)
+            {
+                var record = result.Value as CreditCartOutput;
+                Assert.IsType<OkObjectResult>(response);
+                Assert.Equal(mockResult, record);
+            }
+        }
+        
+
         
         [Fact]
         public void ShouldHaveRequiredAttributes_OnRegister()
