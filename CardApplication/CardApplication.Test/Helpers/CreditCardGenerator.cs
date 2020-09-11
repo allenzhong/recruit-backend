@@ -25,5 +25,15 @@ namespace CardApplication.Test.Helpers
                 .RuleFor(u => u.ExpiryDate, f => f.Date.Between(DateTime.Today, DateTime.Today.AddYears(3)).Date);
             return faker;
         }
+
+        public static Faker<CreditCartOutput> CreateValidCreditCardOutputFaker()
+        {
+            var faker = new Faker<CreditCartOutput>()
+                .RuleFor(u => u.Id, (f) => f.Random.Long())
+                .RuleFor(u => u.Name, (f) => f.Name.LastName())
+                .RuleFor(u => u.CardNumber, f => f.Finance.CreditCardNumber())
+                .RuleFor(u => u.ExpiryDate, f => f.Date.Between(DateTime.Today, DateTime.Today.AddYears(3)).Date);
+            return faker; 
+        }
     }
 }

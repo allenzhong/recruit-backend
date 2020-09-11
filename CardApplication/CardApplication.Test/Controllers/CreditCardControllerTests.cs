@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,14 +19,14 @@ using Xunit;
 namespace CardApplication.Test.Controllers
 {
     [Trait("Category", "Unittest")]
-    public class CardControllerTests
+    public class CreditCardControllerTests
     {
         private readonly Mock<IMediator> _mediatorMock;
         private readonly CreditCardController _controller;
         private readonly CardInput _validInput;
         private readonly Mock<ILogger<CreditCardController>> _logger;
 
-        public CardControllerTests()
+        public CreditCardControllerTests()
         {
             _logger = new Mock<ILogger<CreditCardController>>();
             _mediatorMock = new Mock<IMediator>();
@@ -66,6 +67,53 @@ namespace CardApplication.Test.Controllers
         }
         
         [Fact]
+        public async Task ShouldCallHandler_WhenCallingGet()
+        {
+            
+            await _controller.Get();
+
+            _mediatorMock.Verify(
+                m => m.Send(
+                    It.IsAny<GetAllCreditCardQuery>(), It.IsAny<CancellationToken>()),
+                Times.Once);
+        }
+
+        [Fact]
+        public async Task ShouldReturnListOfRecords_WhenCallingGet()
+        {
+            var mockResult = CreditCardGenerator.CreateValidCreditCardOutputFaker().Generate(3);
+
+            _mediatorMock.Setup(m =>
+                m.Send(It.IsAny<GetAllCreditCardQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(mockResult);
+            
+            var response = await _controller.Get();
+            if (response is OkObjectResult result)
+            {
+                var recordSet = result.Value as List<CreditCartOutput>;
+            
+                Assert.IsType<OkObjectResult>(response);
+                Assert.Equal(3, recordSet.Count);
+            }
+        }
+        
+        [Fact]
+        public async Task ShouldReturnEmptyListOfRecords_WhenCallingGet_IfNoData()
+        {
+            var mockResult = new List<CreditCartOutput>();
+
+            _mediatorMock.Setup(m =>
+                m.Send(It.IsAny<GetAllCreditCardQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(mockResult);
+            
+            var response = await _controller.Get();
+            if (response is OkObjectResult result)
+            {
+                var recordSet = result.Value as List<CreditCartOutput>;
+            
+                Assert.Empty(recordSet);
+            }
+        }
+        
+        [Fact]
         public void ShouldHaveRequiredAttributes_OnRegister()
         {
             var controllerType = _controller.GetType();
@@ -74,8 +122,18 @@ namespace CardApplication.Test.Controllers
             Assert.NotNull(methodInfo.GetAttribute<HttpPostAttribute>());
         }
         
+        [Fact]
+        public void ShouldHaveRequiredAttributes_OnGetAll()
+        {
+            var controllerType = _controller.GetType();
+            var methodInfo = controllerType.GetMethod("Get");
+
+            Assert.NotNull(methodInfo.GetAttribute<HttpPostAttribute>());
+        }
+        
         [Theory]
         [InlineData("Register", null, "register")]
+        [InlineData("Get", null, "")]
         public void ShouldHaveRouteAttributes_OnMethods(string methodName, Type[] types, string expectedTemplate)
         {
             AssertRouteTemplate<CreditCardController>(methodName, types, expectedTemplate);

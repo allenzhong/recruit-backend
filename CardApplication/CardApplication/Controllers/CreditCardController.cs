@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using CardApplication.Application.Handlers;
@@ -43,5 +44,18 @@ namespace CardApplication.Controllers
                 return Conflict();
             }
         }
+
+        [HttpGet]
+        [Route("")]
+        public async Task<IActionResult> Get()
+        {
+            _logger.LogTrace("Begin: Get All");
+ 
+            var query = new GetAllCreditCardQuery();
+            var records = await _mediator.Send(query);
+ 
+            return Ok(records);
+        }
+        
     }
 }
