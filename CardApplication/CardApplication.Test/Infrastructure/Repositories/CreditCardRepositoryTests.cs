@@ -27,7 +27,7 @@ namespace CardApplication.Test.Infrastructure.Repositories
         {
             await ResetDatabase();
             var creditCard = CreditCardGenerator.CreateValidCreditCardFaker().Generate();
-            await _creditCardRepository.Create(creditCard, CancellationToken.None);
+            await _creditCardRepository.Create(creditCard);
 
             var result = await Connection.QueryFirstAsync(
                 @"SELECT * FROM CreditCards where CardNumber=@CardNumber",
@@ -47,7 +47,7 @@ namespace CardApplication.Test.Infrastructure.Repositories
             var creditCards = await CreditCardDataFactory.CreateCreditCards(Connection, 1);
 
             await Assert.ThrowsAsync<CreditCardRecordExistingException>(() =>
-                _creditCardRepository.Create(creditCards.First(), CancellationToken.None));
+                _creditCardRepository.Create(creditCards.First()));
         }
         
         

@@ -1,7 +1,10 @@
 using System.Threading;
 using System.Threading.Tasks;
 using CardApplication.Application.Models;
+using CardApplication.Exceptions;
+using CardApplication.Infrastructure.Repositories;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace CardApplication.Application.Handlers
 {
@@ -17,9 +20,32 @@ namespace CardApplication.Application.Handlers
 
     public class GetCreditCardByIdQueryHandler : IRequestHandler<GetCreditCardByIdQuery, CreditCartOutput>
     {
-        public Task<CreditCartOutput> Handle(GetCreditCardByIdQuery request, CancellationToken cancellationToken)
+        private ICreditCardRepository _creditCardRepository;
+        private ILogger<GetCreditCardByIdQueryHandler> _logger;
+
+        public GetCreditCardByIdQueryHandler(ICreditCardRepository creditCardRepository, ILogger<GetCreditCardByIdQueryHandler> logger)
         {
-            throw new System.NotImplementedException();
+            _logger = logger;
+            _creditCardRepository = creditCardRepository;
+        }
+
+        public async Task<CreditCartOutput> Handle(GetCreditCardByIdQuery request, CancellationToken cancellationToken)
+        {
+            _logger.LogTrace("Handler Begin");
+            
+            var dbModel = await _creditCardRepository.GetById(request.Id);
+            
+            if(dbModel == null) throw new RecordNotFoundException();
+            
+            var result = new CreditCartOutput
+            {
+                CardNumber = dbModel.CardNumber,
+                Name = dbModel.Name,
+                ExpiryDate = dbModel.ExpiryDate
+            };
+
+            _logger.LogTrace("Return Record");
+            return result;
         }
     }
 }

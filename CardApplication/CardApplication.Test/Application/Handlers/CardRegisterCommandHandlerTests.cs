@@ -40,7 +40,7 @@ namespace CardApplication.Test.Application.Handlers
                                                     && c.CardNumber == _cardInput.CardNumber
                                                     && c.Cvc != _cardInput.Cvc
                                                     && !string.IsNullOrEmpty(c.CvcSalt) 
-                                                    && c.ExpiryDate == _cardInput.ExpiryDate), CancellationToken.None),
+                                                    && c.ExpiryDate == _cardInput.ExpiryDate)),
                         Times.Once());
         }   
     }

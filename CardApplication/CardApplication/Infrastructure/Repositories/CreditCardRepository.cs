@@ -20,7 +20,7 @@ namespace CardApplication.Infrastructure.Repositories
             _logger = logger;
             _connection = connection;
         }
-        public async Task Create(CreditCard card, CancellationToken cancellationToken)
+        public async Task Create(CreditCard card)
         {
             try
             {
@@ -72,6 +72,11 @@ namespace CardApplication.Infrastructure.Repositories
             ";
 
             return await _connection.QueryAsync<CreditCard>(sql);
+        }
+
+        public Task<CreditCard> GetById(long id)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

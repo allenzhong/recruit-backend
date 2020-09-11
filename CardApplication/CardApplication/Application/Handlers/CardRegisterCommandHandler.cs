@@ -39,7 +39,7 @@ namespace CardApplication.Application.Handlers
             creditCard.Cvc = cardInput.Cvc;
             creditCard.ExpiryDate = cardInput.ExpiryDate;
             
-            await _repository.Create(creditCard, cancellationToken);
+            await _repository.Create(creditCard);
             _logger.LogTrace("Created credit card");
         }
     }

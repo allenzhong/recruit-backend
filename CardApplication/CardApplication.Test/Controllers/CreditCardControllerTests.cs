@@ -145,6 +145,18 @@ namespace CardApplication.Test.Controllers
         }
         
         [Fact]
+        public async Task ShouldReturn404_WhenCallingGetByIdAndDataNotExisting()
+        {
+            _mediatorMock.Setup(m =>
+                m.Send(It.IsAny<GetCreditCardByIdQuery>(), It.IsAny<CancellationToken>()))
+                .ThrowsAsync(new RecordNotFoundException());
+            
+            var response = await _controller.GetById(123L);
+            
+            Assert.IsType<NotFoundResult>(response);
+        }
+        
+        [Fact]
         public void ShouldHaveRequiredAttributes_OnRegister()
         {
             var controllerType = _controller.GetType();
