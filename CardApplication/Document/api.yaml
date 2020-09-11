@@ -13,12 +13,10 @@ schemes:
   - https
   - http
 paths:
-  /card:
+  /CreditCard:
     post:
-      tags:
-        - card
-      summary: Add a new card
-      operationId: addCard
+      summary: Register a new card
+      operationId: Register
       consumes:
         - application/json
       produces:
@@ -37,15 +35,54 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/ErrorResponse'
+        "404":
+          description: Not Found.
         "409":
           description: Conflict. Card existing.
+    get:
+      summary: Get all registered credit cards
+      operationId: Get
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: All registered card
+          schema:
+            $ref: '#/definitions/ListOfCards'
+        "400":
+          description: Bad Request
+  /CreditCard/{id}:
+    get:
+      summary: Get specified registered credit card
+      operationId: GetById
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: registered card id
+          required: true
+          type: integer
+          maximum: 10.0
+          minimum: 1.0
+          format: int64
+      responses:
+        "200":
+          description: Get a registered card
+          schema:
+            $ref: '#/definitions/CardOutput'
+        "400":
+          description: Bad Request
 definitions:
   Card:
     type: object
     properties:
       id:
-        type: string
-        format: uuid
+        type: integer
       name:
         type: string
         minLength: 3
@@ -59,6 +96,25 @@ definitions:
       expireDate:
         type: string
         format: date
+  CardOutput:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+        minLength: 3
+        maxLength: 50
+      cardNumber:
+        type: string
+        format: integer
+      expiryDate:
+        type: string
+        format: date
+  ListOfCards:
+    type: array
+    items:
+      $ref: '#/definitions/CardOutput'
   ErrorResponse:
     type: object
     properties:
@@ -73,4 +129,3 @@ definitions:
         type: string
       errors:
         type: object
-      
