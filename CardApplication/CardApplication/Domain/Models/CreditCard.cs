@@ -1,45 +1,29 @@
 using System;
 using System.Linq;
-using System.Text;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 namespace CardApplication.Domain.Models
 {
     public class CreditCard
     {
-        private string _cvc = "";
         public long Id { get; set; }
         public string Name { get; set; }
         public string CardNumber { get; set; }
-
-        public string Cvc
-        {
-            get
-            {
-                return _cvc;
-            }
-            set
-            {
-                //TODO verify cvc, need change cvc setting logic 
-                var ascii = Encoding.ASCII;  
-                _cvc = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                    password: value,
-                    salt: ascii.GetBytes(CvcSalt), 
-                    prf: KeyDerivationPrf.HMACSHA1,
-                    iterationCount: 10000,
-                    numBytesRequested: 256 / 8));
-            }
-        }
-
-        public string CvcSalt { get; set; } = "";
+        public string EncryptedCvc { get; set; }
         public DateTime ExpiryDate { get; set; }
+        public string CvcSalt { get; set; } = "";
 
-        public static string GenerateSalt(int length)
+        private string GenerateSalt(int length)
         {
             var random = new Random();
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             return new string(Enumerable.Repeat(chars, length)
                 .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+        public void EncryptCvcCode(string cvc, int saltLength)
+        {
+            CvcSalt = GenerateSalt(saltLength);
+            EncryptedCvc = Encryption.Encrypt(cvc, CvcSalt);
         }
     }
 }

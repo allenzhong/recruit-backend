@@ -69,7 +69,7 @@ namespace CardApplication.Controllers
                 var record = await _mediator.Send(query);
                 return Ok(record);
             }
-            catch (RecordNotFoundException e)
+            catch (RecordNotFoundException)
             {
                 _logger.LogTrace($"Record not found by id {id}");
 

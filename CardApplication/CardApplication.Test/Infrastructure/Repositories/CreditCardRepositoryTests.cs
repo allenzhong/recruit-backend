@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using CardApplication.Exceptions;
 using CardApplication.Infrastructure.Repositories;
@@ -37,7 +36,7 @@ namespace CardApplication.Test.Infrastructure.Repositories
             Assert.NotEqual(0L, result.Id);
             Assert.Equal(creditCard.Name, result.Name);
             Assert.Equal(creditCard.CardNumber, result.CardNumber);
-            Assert.Equal(creditCard.Cvc, result.Cvc);
+            Assert.Equal(creditCard.EncryptedCvc, result.EncryptedCvc);
             Assert.Equal(creditCard.CvcSalt, result.CvcSalt);
             Assert.Equal(creditCard.ExpiryDate, result.ExpiryDate);
         }
@@ -62,7 +61,7 @@ namespace CardApplication.Test.Infrastructure.Repositories
 
             foreach (var verifyModel in creditCards.Select(dbModel => result.Where(r =>
                 r.CardNumber == dbModel.CardNumber
-                && r.Cvc == dbModel.Cvc
+                && r.EncryptedCvc == dbModel.EncryptedCvc
                 && r.CvcSalt == dbModel.CvcSalt
                 && r.Name == dbModel.Name
                 && r.ExpiryDate == dbModel.ExpiryDate)))
@@ -77,15 +76,14 @@ namespace CardApplication.Test.Infrastructure.Repositories
             await ResetDatabase();
             var creditCards = await CreditCardDataFactory.CreateCreditCards(Connection, 5);
 
-            var random = new Random(5).Next();
+            var random = new Random().Next(0, 4);
             var oneOfCards = creditCards.Take(random).First();
             var result = await _creditCardRepository.GetById(oneOfCards.Id);
 
             Assert.Equal(oneOfCards.Id, result.Id); 
             Assert.Equal(oneOfCards.Name, result.Name); 
             Assert.Equal(oneOfCards.CardNumber, result.CardNumber); 
-            //TODO verify cvc, need change cvc setting logic 
-            // Assert.Equal(oneOfCards.Cvc, result.Cvc); 
+            Assert.Equal(oneOfCards.EncryptedCvc, result.EncryptedCvc); 
             Assert.Equal(oneOfCards.ExpiryDate, result.ExpiryDate); 
         }
     }

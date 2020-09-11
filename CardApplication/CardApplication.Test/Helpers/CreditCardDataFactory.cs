@@ -17,14 +17,14 @@ namespace CardApplication.Test.Helpers
                 INSERT INTO [dbo].[CreditCards] (
                         [Name],
                         [CardNumber],
-                        [Cvc],
+                        [EncryptedCvc],
                         [CvcSalt],
                         [ExpiryDate]
                         )
                 VALUES (
                         @Name,
                         @CardNumber,
-                        @Cvc,
+                        @EncryptedCvc,
                         @CvcSalt,
                         @ExpiryDate
                 )                
@@ -32,7 +32,7 @@ namespace CardApplication.Test.Helpers
                 {
                     c.Name,
                     c.CardNumber,
-                    c.Cvc,
+                    c.EncryptedCvc,
                     c.CvcSalt,
                     c.ExpiryDate
                 });

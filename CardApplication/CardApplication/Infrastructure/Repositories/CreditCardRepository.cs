@@ -28,14 +28,14 @@ namespace CardApplication.Infrastructure.Repositories
                 INSERT INTO [dbo].[CreditCards] (
                         [Name],
                         [CardNumber],
-                        [Cvc],
+                        [EncryptedCvc],
                         [ExpiryDate],
                         [CvcSalt]
                         )
                 VALUES (
                         @Name,
                         @CardNumber,
-                        @Cvc,
+                        @EncryptedCvc,
                         @ExpiryDate,
                         @CvcSalt
                 )
@@ -45,7 +45,7 @@ namespace CardApplication.Infrastructure.Repositories
                 {
                     card.Name,
                     card.CardNumber,
-                    card.Cvc,
+                    card.EncryptedCvc,
                     card.ExpiryDate,
                     card.CvcSalt
                 });
@@ -67,7 +67,7 @@ namespace CardApplication.Infrastructure.Repositories
                 SELECT  [Id],
                         [Name],
                         [CardNumber],
-                        [Cvc],
+                        [EncryptedCvc],
                         [ExpiryDate],
                         [CvcSalt] 
                 FROM [dbo].[CreditCards] 
@@ -79,10 +79,7 @@ namespace CardApplication.Infrastructure.Repositories
         public async Task<CreditCard> GetById(long id)
         {
             const string sql = @"
-                SELECT  [Id],
-                        [Name],
-                        [CardNumber],
-                        [ExpiryDate]
+                SELECT * 
                 FROM [dbo].[CreditCards] 
                 WHERE Id = @Id
             ";

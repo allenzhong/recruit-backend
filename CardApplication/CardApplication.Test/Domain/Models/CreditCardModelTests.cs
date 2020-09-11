@@ -7,23 +7,14 @@ namespace CardApplication.Test.Domain.Models
     public class CreditCardModelTests
     {
         [Fact]
-        public void ShouldGenerateRandomStringWithSpecifiedLength_WhenCallingGenerateSalt()
-        {
-            var salt = CreditCard.GenerateSalt(10);
-            Assert.NotEmpty(salt);
-            Assert.Equal(10, salt.Length);
-        }
-        
-        [Fact]
         public void ShouldCvcNumberBeEncryptedWhenValueSet()
         {
             var creditCard = new CreditCard();
 
             var cvc = new Bogus.Faker().Finance.CreditCardCvv();
-            creditCard.CvcSalt = CreditCard.GenerateSalt(5);
-            creditCard.Cvc = cvc;
+            creditCard.EncryptCvcCode(cvc, 5);
 
-            Assert.NotEqual(cvc, creditCard.Cvc);
+            Assert.NotEqual(cvc, creditCard.EncryptedCvc);
         }
 
     }

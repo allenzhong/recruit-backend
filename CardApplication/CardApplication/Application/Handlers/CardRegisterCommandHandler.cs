@@ -35,8 +35,7 @@ namespace CardApplication.Application.Handlers
             var creditCard = new CreditCard();
             creditCard.Name = cardInput.Name;
             creditCard.CardNumber = cardInput.CardNumber;
-            creditCard.CvcSalt = CreditCard.GenerateSalt(5);
-            creditCard.Cvc = cardInput.Cvc;
+            creditCard.EncryptCvcCode(cardInput.Cvc, 5);
             creditCard.ExpiryDate = cardInput.ExpiryDate;
             
             await _repository.Create(creditCard);
