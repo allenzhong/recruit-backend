@@ -18,12 +18,14 @@ namespace CardApplication.Test.Helpers
                         [Name],
                         [CardNumber],
                         [Cvc],
+                        [CvcSalt],
                         [ExpiryDate]
                         )
                 VALUES (
                         @Name,
                         @CardNumber,
                         @Cvc,
+                        @CvcSalt,
                         @ExpiryDate
                 )                
                 ", new
@@ -31,6 +33,7 @@ namespace CardApplication.Test.Helpers
                     c.Name,
                     c.CardNumber,
                     c.Cvc,
+                    c.CvcSalt,
                     c.ExpiryDate
                 });
             }

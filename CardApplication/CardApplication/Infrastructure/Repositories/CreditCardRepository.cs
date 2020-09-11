@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading;
@@ -58,6 +59,19 @@ namespace CardApplication.Infrastructure.Repositories
 
                 throw;
             }
+        }
+
+        public async Task<IEnumerable<CreditCard>> Get()
+        {
+            const string sql = @"
+                SELECT  [Name],
+                        [CardNumber],
+                        [Cvc],
+                        [ExpiryDate],
+                        [CvcSalt] FROM [dbo].[CreditCards] 
+            ";
+
+            return await _connection.QueryAsync<CreditCard>(sql);
         }
     }
 }

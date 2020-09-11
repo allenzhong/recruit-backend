@@ -49,5 +49,27 @@ namespace CardApplication.Test.Infrastructure.Repositories
             await Assert.ThrowsAsync<CreditCardRecordExistingException>(() =>
                 _creditCardRepository.Create(creditCards.First(), CancellationToken.None));
         }
+        
+        
+        [Fact]
+        public async Task Give5RecordExistsShouldReturn_WhenCallingGet()
+        {
+            await ResetDatabase();
+            var creditCards = await CreditCardDataFactory.CreateCreditCards(Connection, 5);
+
+            var result = await _creditCardRepository.Get();
+            
+            foreach (var verifyModel in creditCards.Select(dbModel => result.Where(r =>
+                r.CardNumber == dbModel.CardNumber
+                && r.Cvc == dbModel.Cvc
+                && r.CvcSalt == dbModel.CvcSalt
+                && r.Name == dbModel.Name
+                && r.ExpiryDate == dbModel.ExpiryDate)))
+            {
+                Assert.NotNull(verifyModel);
+            }
+        }
+        
+        
     }
 }
