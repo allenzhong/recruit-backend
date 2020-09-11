@@ -57,5 +57,15 @@ namespace CardApplication.Controllers
             return Ok(records);
         }
         
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetById(long id)
+        {
+            _logger.LogTrace("Begin: Get by Id");
+            var query = new GetCreditCardByIdQuery(id);
+            var record = await _mediator.Send(query);
+            return null;
+        }
+        
     }
 }

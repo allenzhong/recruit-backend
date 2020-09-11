@@ -96,6 +96,21 @@ namespace CardApplication.Test.Controllers
         }
         
         [Fact]
+        public async Task ShouldCallHandler_WhenCallingGetById()
+        {
+            const long id = 123L;
+            
+            await _controller.GetById(id);
+
+            _mediatorMock.Verify(
+                m => m.Send(
+                    It.Is<GetCreditCardByIdQuery>(
+                        q => q.Id == id), 
+                    It.IsAny<CancellationToken>()),
+                Times.Once);
+        }
+        
+        [Fact]
         public async Task ShouldReturnEmptyListOfRecords_WhenCallingGet_IfNoData()
         {
             var mockResult = new List<CreditCartOutput>();
@@ -130,9 +145,19 @@ namespace CardApplication.Test.Controllers
             Assert.NotNull(methodInfo.GetAttribute<HttpGetAttribute>());
         }
         
+        [Fact]
+        public void ShouldHaveRequiredAttributes_OnGetById()
+        {
+            var controllerType = _controller.GetType();
+            var methodInfo = controllerType.GetMethod("GetById");
+
+            Assert.NotNull(methodInfo.GetAttribute<HttpGetAttribute>());
+        }
+
         [Theory]
         [InlineData("Register", null, "register")]
         [InlineData("Get", null, "")]
+        [InlineData("GetById", new Type[] {typeof(long)}, "{id}")]
         public void ShouldHaveRouteAttributes_OnMethods(string methodName, Type[] types, string expectedTemplate)
         {
             AssertRouteTemplate<CreditCardController>(methodName, types, expectedTemplate);
