@@ -78,7 +78,12 @@ namespace CardApplication.Infrastructure.Repositories
         public async Task<CreditCard> GetById(long id)
         {
             const string sql = @"
-                SELECT * 
+                SELECT  [Id],
+                        [Name],
+                        [CardNumber],
+                        [EncryptedCvc],
+                        [ExpiryDate],
+                        [CvcSalt]  
                 FROM [dbo].[CreditCards] 
                 WHERE Id = @Id
             ";

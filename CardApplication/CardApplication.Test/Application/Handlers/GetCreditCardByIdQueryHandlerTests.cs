@@ -39,9 +39,11 @@ namespace CardApplication.Test.Application.Handlers
         }
         
         [Fact]
-        public async Task ShouldReturnListOfOutputModel()
+        public async Task ShouldReturnSingleModel()
         {
-            var dbModel = CreditCardGenerator.CreateValidCreditCardFaker().Generate();
+            var dbModel = CreditCardGenerator.CreateValidCreditCardFaker()
+                .RuleFor(r => r.Id, f => f.Random.Long())
+                .Generate();
 
             _respositoryMock.Setup(r => r.GetById(It.IsAny<long>())).ReturnsAsync(dbModel);
             

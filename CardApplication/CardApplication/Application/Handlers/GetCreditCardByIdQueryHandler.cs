@@ -39,6 +39,7 @@ namespace CardApplication.Application.Handlers
             
             var result = new CreditCartOutput
             {
+                Id = dbModel.Id,
                 CardNumber = dbModel.CardNumber,
                 Name = dbModel.Name,
                 ExpiryDate = dbModel.ExpiryDate

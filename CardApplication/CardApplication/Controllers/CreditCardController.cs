@@ -46,6 +46,7 @@ namespace CardApplication.Controllers
 
         [HttpGet]
         [Route("")]
+        [Authorize]
         public async Task<IActionResult> Get()
         {
             _logger.LogTrace("Begin: Get All");
@@ -58,6 +59,7 @@ namespace CardApplication.Controllers
         
         [HttpGet]
         [Route("{id}")]
+        [Authorize]
         public async Task<IActionResult> GetById(long id)
         {
             _logger.LogTrace("Begin: Get by Id");
@@ -75,6 +77,5 @@ namespace CardApplication.Controllers
                 return NotFound();
             }
         }
-        
     }
 }
