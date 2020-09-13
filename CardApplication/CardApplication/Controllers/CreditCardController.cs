@@ -26,7 +26,7 @@ namespace CardApplication.Controllers
         }
         
         [HttpPost]
-        [Route("register")]
+        [Route("")]
         [Authorize]
         public async Task<IActionResult> Register(CardInput cardInput, CancellationToken cancellationToken)
         {

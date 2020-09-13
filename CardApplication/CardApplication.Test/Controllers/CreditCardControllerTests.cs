@@ -184,7 +184,7 @@ namespace CardApplication.Test.Controllers
         }
 
         [Theory]
-        [InlineData("Register", null, "register")]
+        [InlineData("Register", null, "")]
         [InlineData("Get", null, "")]
         [InlineData("GetById", new[] {typeof(long)}, "{id}")]
         public void ShouldHaveRouteAttributes_OnMethods(string methodName, Type[] types, string expectedTemplate)

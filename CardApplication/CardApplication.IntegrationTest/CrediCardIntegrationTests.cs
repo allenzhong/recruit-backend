@@ -20,7 +20,6 @@ namespace CardApplication.IntegrationTest
         private readonly string _expiryDate;
         private CreditCardResponse _createdCard;
         private const string Resource = "creditcard";
-        private const string PostEndpoint = "register";
         private const string GetEndpoint = "";
         
         public CrediCardIntegrationTests()
@@ -51,7 +50,7 @@ namespace CardApplication.IntegrationTest
         [Fact, TestPriority(1)]
         public void ShouldBeAbleToGetUnauthorized_WhenCallingPost()
         {
-            var client = new RestClient($"{_serverOptions.BaseUrl}/{Resource}/{PostEndpoint}");
+            var client = new RestClient($"{_serverOptions.BaseUrl}/{Resource}/");
             var request = new RestRequest(Method.POST);
             request.AddHeader("content-type", "application/json");
             IRestResponse response = client.Execute(request);
@@ -88,7 +87,7 @@ namespace CardApplication.IntegrationTest
 
         private void CreateCreditCard()
         {
-            var client = new RestClient($"{_serverOptions.BaseUrl}/{Resource}/{PostEndpoint}");
+            var client = new RestClient($"{_serverOptions.BaseUrl}/{Resource}/");
             var request = new RestRequest(Method.POST);
             request.AddHeader("content-type", "application/json");
             request.AddHeader("Authorization", $"{_token.token_type} {_token.access_token}");
