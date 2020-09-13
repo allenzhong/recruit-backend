@@ -40,11 +40,10 @@ To be continue:
 
 ### CardApplication.DbMigration
 
-This project is to manage database change and to run the changes consistently. It is integrated into WebAPI application.
+This project is to manage database change and to run the changes consistently. 
+It is integrated into WebAPI application so that the migrations will be run when the WebApi server spin up. 
 
-It will be run everytime the WebApi server spin up. 
-
-## CardApplication.Test
+### CardApplication.Test
 
 This is test project. To run the db tests, the db connection string needs to be configured in `appsetting.json` in the project.
 
@@ -54,7 +53,7 @@ This is test project. To run the db tests, the db connection string needs to be 
   }
 ```
 
-## CardApplication.IntegrationTest
+### CardApplication.IntegrationTest
 
 This is the integration test. The tests are in order. Ideally it should test the Api flows with different status code. 
 
