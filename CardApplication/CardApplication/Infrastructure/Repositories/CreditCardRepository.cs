@@ -87,7 +87,7 @@ namespace CardApplication.Infrastructure.Repositories
                 FROM [dbo].[CreditCards] 
                 WHERE Id = @Id
             ";
-            return await _connection.QueryFirstAsync<CreditCard>(sql, new
+            return await _connection.QueryFirstOrDefaultAsync<CreditCard>(sql, new
                 {Id = id});
         }
     }

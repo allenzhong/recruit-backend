@@ -34,7 +34,7 @@ namespace CardApplication.Application.Handlers
             {
                 Id = r.Id,
                 Name = r.Name,
-                CardNumber = r.Name,
+                CardNumber = r.CardNumber,
                 ExpiryDate = r.ExpiryDate
             });
 

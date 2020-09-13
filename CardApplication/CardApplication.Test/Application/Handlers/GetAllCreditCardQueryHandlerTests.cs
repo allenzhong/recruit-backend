@@ -45,15 +45,22 @@ namespace CardApplication.Test.Application.Handlers
 
             _respositoryMock.Setup(r => r.Get()).ReturnsAsync(dbModels);
             
-            var result = await _handler.Handle(_query, CancellationToken.None);
+            var result = (await _handler.Handle(_query, CancellationToken.None)).ToList();
 
-            foreach (var verifyModel in dbModels.Select(dbModel => result.Where(r =>
-                r.CardNumber == dbModel.CardNumber
-                && r.Name == dbModel.Name
-                && r.ExpiryDate == dbModel.ExpiryDate)))
-            {
-                Assert.NotNull(verifyModel);
-            }
+            var expected1 = dbModels[0];
+            var actual1 = result[0];
+            
+            Assert.True(expected1.CardNumber == actual1.CardNumber
+                        && expected1.Name == actual1.Name
+                        && expected1.ExpiryDate == actual1.ExpiryDate);
+
+            var expected2 = dbModels[1];
+            var actual2 = result[1];
+            
+            Assert.True(expected2.CardNumber == actual2.CardNumber
+                        && expected2.Name == actual2.Name
+                        && expected2.ExpiryDate == actual2.ExpiryDate);
+
         }
     }
 }
