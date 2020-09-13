@@ -20,7 +20,7 @@ namespace CardApplication.Test.Extensions
     public class DependencyInjectionConfigTests
     {       
         [Fact]
-        public void CanResolveRespositories()
+        public void CanResolveRepositories()
         {
            TryResolveTypes(new List<Type>()
            {
@@ -29,7 +29,7 @@ namespace CardApplication.Test.Extensions
         }
 
         [Fact]
-        public void CanResolveDBConnection()
+        public void CanResolveDbConnection()
         {
             TryResolveTypes(new List<Type>()
             {

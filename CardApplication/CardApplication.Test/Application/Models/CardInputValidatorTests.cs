@@ -1,8 +1,8 @@
 using System;
 using CardApplication.Application.Models;
 using CardApplication.Test.Helpers;
+using FluentValidation.Results;
 using Xunit;
-using ValidationResult = FluentValidation.Results.ValidationResult;
 
 namespace CardApplication.Test.Application.Models
 {
@@ -22,7 +22,7 @@ namespace CardApplication.Test.Application.Models
         public void ShouldReturnInvalidWhenNameIsNull()
         {
             var card = CreditCardGenerator.CreateValidCardInputFaker()
-                .RuleFor(u => u.Name, (f) => null)
+                .RuleFor(u => u.Name, f => null)
                 .Generate();
             
             var result = ValidateCard(card);
@@ -33,7 +33,7 @@ namespace CardApplication.Test.Application.Models
         public void ShouldReturnInvalidWhenLenghtOfNameGreaterThan50()
         {
             var card = CreditCardGenerator.CreateValidCardInputFaker()
-                .RuleFor(u => u.Name, (f) => f.Random.String(51))
+                .RuleFor(u => u.Name, f => f.Random.String(51))
                 .Generate();
             
             var result = ValidateCard(card);
@@ -44,7 +44,7 @@ namespace CardApplication.Test.Application.Models
         public void ShouldReturnInvalidWhenCreditCarNumberIsInvalid()
         {
             var card = CreditCardGenerator.CreateValidCardInputFaker()
-                .RuleFor(u => u.CardNumber, (f) => f.Random.String(11))
+                .RuleFor(u => u.CardNumber, f => f.Random.String(11))
                 .Generate();
             
             var result = ValidateCard(card);
@@ -55,7 +55,7 @@ namespace CardApplication.Test.Application.Models
         public void ShouldReturnValidWhenCvcLengthIs3()
         {
             var card = CreditCardGenerator.CreateValidCardInputFaker()
-                .RuleFor(u => u.Cvc, (f) => string.Join("", f.Random.Digits(3)))
+                .RuleFor(u => u.Cvc, f => string.Join("", f.Random.Digits(3)))
                 .Generate();
             
             var result = ValidateCard(card);
@@ -65,7 +65,7 @@ namespace CardApplication.Test.Application.Models
         public void ShouldReturnValidWhenCvcLengthIs4()
         {
             var card = CreditCardGenerator.CreateValidCardInputFaker()
-                .RuleFor(u => u.Cvc, (f) => string.Join("", f.Random.Digits(4)))
+                .RuleFor(u => u.Cvc, f => string.Join("", f.Random.Digits(4)))
                 .Generate();
             
             var result = ValidateCard(card);
@@ -76,7 +76,7 @@ namespace CardApplication.Test.Application.Models
         public void ShouldReturnInvalidWhenCvcIsInvalid()
         {
             var card = CreditCardGenerator.CreateValidCardInputFaker()
-                .RuleFor(u => u.Cvc, (f) => f.Random.String(3))
+                .RuleFor(u => u.Cvc, f => f.Random.String(3))
                 .Generate();
             
             var result = ValidateCard(card);
@@ -88,7 +88,7 @@ namespace CardApplication.Test.Application.Models
         public void ShouldReturnInvalidWhenCvcLengthGreaterThan4()
         {
             var card = CreditCardGenerator.CreateValidCardInputFaker()
-                .RuleFor(u => u.Cvc, (f) => f.Random.String(5))
+                .RuleFor(u => u.Cvc, f => f.Random.String(5))
                 .Generate();
             
             var result = ValidateCard(card);
@@ -99,7 +99,7 @@ namespace CardApplication.Test.Application.Models
         public void ShouldReturnInvalidWhenExpiryDateIsBeforeToday()
         {
             var card = CreditCardGenerator.CreateValidCardInputFaker()
-                .RuleFor(u => u.ExpiryDate, (f) => f.Date.Past())
+                .RuleFor(u => u.ExpiryDate, f => f.Date.Past())
                 .Generate();
             
             var result = ValidateCard(card);
@@ -110,7 +110,7 @@ namespace CardApplication.Test.Application.Models
         public void ShouldReturnValidWhenExpiryDateIsToday()
         {
             var card = CreditCardGenerator.CreateValidCardInputFaker()
-                .RuleFor(u => u.ExpiryDate, (f) => DateTime.Today)
+                .RuleFor(u => u.ExpiryDate, f => DateTime.Today)
                 .Generate();
             
             var result = ValidateCard(card);
